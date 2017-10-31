@@ -1,0 +1,23 @@
+<% title "Invoices" %>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Invoice Date</th>
+    <th>Paid Date</th>
+    <th>Memo</th>
+  </tr>
+  <% for invoice in @invoices %>
+    <tr>
+      <td><%= invoice.project.name %></td>
+      <td><%= invoice.invoice_date %></td>
+      <td><%= invoice.paid_date %></td>
+      <td><%= invoice.memo %></td>
+      <td><%= link_to "Show", invoice %></td>
+      <td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+      <td><%= link_to "Destroy", invoice, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @events %>

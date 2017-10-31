@@ -1,0 +1,60 @@
+Timesheet is a Ruby on Rails (3.1.0) application that lets you keep track of the time you spend on various projects.
+
+The "home" page is the project list (index action). From this list you can
+* click on project name to edit it's details
+
+* click on "Events" link (button?) to show (complete) list of events associated with a project
+
+* click on "Start" link (button?) to start a new event for a project
+** timestamp defaults to now
+** rate defaults to project's rate
+** description field is required
+
+* click on "Stop" link (button?) to stop the (only) started event
+** end_at defaults to now but can be changed
+** description field can be updated
+
+* click on "New Invoice" link (button?) to create an invoice
+** list only unpaid, completed (i.e. both start and end times present) events
+** checkbox for each event selects it for inclusion in invoice
+
+Attributes for each ...
+Project:
+- name
+- description
+- contact id
+- default rate
+
+Contact:
+- name
+- email
+- phone
+
+Event:
+- project id
+- invoice id
+- start timestamp
+- end timestamp
+- description
+- charge rate
+
+Invoice:
+- project id
+- invoice date
+- paid date
+- notes
+
+General Todo:
+* customize application.css
+
+Done list:
+* migration for events:
+** remove timestamp (use created_at instead)
+** add end_at (datetime type)
+** add invoice_id
+
+* add invoice model and controller
+
+* migration for projects:
+** add default_rate (float)
+

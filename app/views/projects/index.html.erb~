@@ -1,0 +1,28 @@
+<% title "Projects" %>
+<p><%= link_to "New Project", new_project_path %></p>
+
+<%= will_paginate @projects %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Default Rate</th>
+    <th>Contact</th>
+  </tr>
+  <% for project in @projects %>
+    <tr class="<%= cycle('light','dark')%>">
+      <td><%= link_to project.name, edit_project_path(project) %></td>
+      <td><%= project.description.truncate(50) %></td>
+      <td class='align-right'><%= number_to_currency(project.rate) %></td>
+      <td><%= link_to project.contact.name, "mailto://#{project.contact.email}" %></td>
+      <td><%= link_to "Start", start_event_path(project) %> |
+          <%= link_to_unless @open_events[project.id].nil?, "Stop", stop_now_event_path(project) %> |
+          <%= link_to "Activity", show_project_event_path(project) %> |
+          <%= link_to "Invoices", show_project_invoice_path(project) %> |
+          <%= link_to "Del", project, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @projects %>

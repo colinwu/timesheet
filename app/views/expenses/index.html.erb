@@ -1,0 +1,38 @@
+<% title "Expenses" %>
+<p><%= link_to "New Expense", new_expense_path %></p>
+
+<%= will_paginate @expenses %>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>HST</th>
+    <th>Desc</th>
+    <th>Project</th>
+    <th></th>
+  </tr>
+  <% for expense in @expenses %>
+    <tr class="<%= cycle('dark','light') %>">
+      <td><%= expense.date %></td>
+      <% if expense.money %>
+        <td>
+          <%= number_to_currency(expense.amount) %>
+        </td>
+        <td>
+          <%= number_to_currency(expense.hst) %>
+        </td>
+      <% else %>
+        <td>
+          <%= expense.amount %>
+        </td>
+        <td></td>
+      <% end %>
+      <td><%= expense.desc %></td>
+      <td><%= expense.project.name %></td>
+      <td><%= link_to "Edit", edit_expense_path(expense) %> | <%= link_to "Del", expense, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+<%= will_paginate @expenses %>
+
+<p><%= link_to "New Expense", new_expense_path %></p>

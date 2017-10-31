@@ -1,0 +1,28 @@
+<% title "Expense" %>
+
+<p>
+  <strong>Date:</strong>
+  <%= @expense.date %>
+</p>
+<p>
+  <strong>Amount:</strong>
+  <% if @expense.money %>
+    <%= number_to_currency(@expense.amount) %>
+  <% else %>
+    <%= @expense.amount %>
+  <% end %>
+</p>
+<p>
+  <strong>Desc:</strong>
+  <%= @expense.desc %>
+</p>
+<p>
+  <strong>Project:</strong>
+  <%= @expense.project.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_expense_path(@expense) %> |
+  <%= link_to "Destroy", @expense, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", expenses_path %>
+</p>

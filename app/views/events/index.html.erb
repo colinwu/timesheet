@@ -1,0 +1,51 @@
+<% title @title || "Activity" %>
+<% if request.parameters[:action] == 'show_project' %>
+  <p><%= link_to "New Activity", start_event_path(@p.id) %></p>
+  <%= form_tag("/invoices/#{@p.id}/project_new_or_add") %>
+<% else %>
+  <p><%= link_to "New Activity", new_event_path %></p>
+<% end %>
+
+<%= will_paginate @events %>
+<table>
+  <tr>
+    <th>Sel</th>
+    <th>Started</th>
+    <th>Ended</th>
+<% if request.parameters[:action] != 'show_project' %>
+    <th>Project</th>
+<% else %>
+    <th>Invoice</th>
+<% end %>
+    <th>Description</th>
+    <th></th>
+  </tr>
+  <% for event in @events %>
+    <tr class="<%= cycle('light','dark') %>">
+      <td><% unless (event.end_at.nil? or request.parameters[:action] != 'show_project' or !event.invoice_id.nil?) %><%= check_box_tag "select[#{event.id}]", event.id %><% end %></td>
+      <td><%= event.start_at.to_formatted_s(:db) %></td>
+      <td><%= event.end_at.nil? ? '' : event.end_at.to_formatted_s(:db) %></td>
+<% if request.parameters[:action] != 'show_project' %>
+      <td><%= event.project.name %></td>
+<% else %>
+      <td><%= event.invoice_id.nil? ? '' : event.invoice_id %></td>
+<% end %>
+      <td><%= best_in_place(event, :description) %></td>
+      <td>
+<!--        <% if event.invoice_id.nil? %> -->
+          <%= link_to "Edit", edit_event_path(event) %> |
+          <%= link_to_if event.end_at.nil?, "Stop", stop_now_event_path(event) %> |
+          <%= link_to "Del", event, :confirm => 'Are you sure?', :method => :delete %>
+<!--        <% end %> -->
+      </td>
+    </tr>
+  <% end %>
+  <% if request.parameters[:action] == 'show_project' %>
+    <tr>
+      <td colspan=6>Memo: <%= text_field_tag 'invoice_memo', '', size: 30 %><%= submit_tag "Generate Invoice" %> | <%= submit_tag "Add to Invoice" %><%= text_field_tag 'invoice_id', '', :size => 4 %></td>
+    </tr>
+  <% end %>
+</form>
+</table>
+
+<%= will_paginate @events %>
