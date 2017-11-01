@@ -50,5 +50,3 @@ test:
 production:
   <<: *default
   database: timesheet_production
-  username: timesheet
-  password: <%= ENV['TIMESHEET_DATABASE_PASSWORD'] %>
