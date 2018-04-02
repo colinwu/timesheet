@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
+
   def index
     @events = Event.order("project_id,start_at").paginate(:page => params[:page])
   end
 
   def show
-    @event = Event.find(params[:id])
   end
 
   def new
@@ -21,11 +22,9 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
   end
 
   def update
-    @event = Event.find(params[:id])
     respond_to do |fmt|
       if @event.update_attributes(params[:event])
         fmt.html {redirect_to show_project_event_url(@event.project_id), :notice  => "Successfully updated event."}
@@ -38,7 +37,6 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     redirect_to show_project_event_url(@event.project_id), :notice => "Successfully deleted event."
   end
@@ -50,7 +48,6 @@ class EventsController < ApplicationController
   end
 
   def stop_now
-    @event = Event.find(params[:id])
     @event.update_attributes(:end_at => Time.now)
 #     if @event.save
 #       redirect_to show_project_event_url(@event.project_id), :notice => "Event stopped."
@@ -65,4 +62,15 @@ class EventsController < ApplicationController
     @events = Event.where(['project_id = ?', params[:id]]).order('start_at DESC').paginate(:page => params[:page])
     render :action => 'index'
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_event
+      @event = Event.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def event_params
+      params.require(:event).permit(:start_at, :end_at, :project_id, :invoice_id, :description, :rate)
+    end
 end

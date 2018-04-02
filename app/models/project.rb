@@ -1,5 +1,4 @@
-class Project < ActiveRecord::Base
-  attr_accessible :name, :description, :contact_id, :rate
+class Project < ApplicationRecord
   has_many :events
   belongs_to :contact
 

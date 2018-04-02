@@ -2,22 +2,26 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.9'
+gem 'rails', '~> 5.1.6'
 # Use mysql as the database for Active Record
-gem 'mysql2', '0.3.17'
-gem 'responders', '~> 2.0'
+# gem 'mysql2', '0.3.17'
+gem 'mysql2'
+# gem 'responders', '~> 2.0'
+gem 'responders'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+# gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.2'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 # gem 'twitter-bootstrap-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -40,6 +44,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
   gem 'rvm1-capistrano3', require: false
+  gem 'listen'
 end
 
 # Use debugger
@@ -48,5 +53,4 @@ end
 # gem 'nifty-generators'
 gem 'will_paginate'
 gem 'jquery-datetimepicker-rails'
-gem 'protected_attributes', '>= 1.0.8'
-gem 'best_in_place', '~> 3.1'
+gem 'best_in_place'

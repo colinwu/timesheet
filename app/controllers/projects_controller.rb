@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
   def index
     @projects = Project.order(:name).paginate(:page => params[:page])
     @open_events = Hash.new
@@ -20,7 +21,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
   end
 
   def new
@@ -37,11 +37,9 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = Project.find(params[:id])
   end
 
   def update
-    @project = Project.find(params[:id])
     if @project.update_attributes(params[:project])
       redirect_to @project, :notice  => "Successfully updated project."
     else
@@ -50,8 +48,17 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
     redirect_to projects_url, :notice => "Successfully destroyed project."
+  end
+
+  private
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  def project_params
+    params.require(:project).permit(:name, :description, :contact_id, :rate)
   end
 end

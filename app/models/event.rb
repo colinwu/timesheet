@@ -1,8 +1,7 @@
-class Event < ActiveRecord::Base
-  attr_accessible :start_at, :end_at, :project_id, :invoice_id, :description, :rate
+class Event < ApplicationRecord
   
   belongs_to :project
-  belongs_to :invoice
+  belongs_to :invoice, optional: true
 
   validates_presence_of :project_id
   validates_numericality_of :rate

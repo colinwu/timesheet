@@ -1,4 +1,6 @@
 class InvoicesController < ApplicationController
+  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+
   layout "show_invoice", :only => :show
   
   def index
@@ -6,7 +8,6 @@ class InvoicesController < ApplicationController
   end
 
   def show
-    @invoice = Invoice.find(params[:id])
     @dur = Hash.new
     @sub = Hash.new
     @events = Event.where(["invoice_id = ?", @invoice.id]).order(:start_at)
@@ -50,11 +51,9 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    @invoice = Invoice.find(params[:id])
   end
 
   def update
-    @invoice = Invoice.find(params[:id])
     if @invoice.update_attributes(params[:invoice])
       redirect_to @invoice, :notice  => "Successfully updated invoice."
     else
@@ -63,7 +62,6 @@ class InvoicesController < ApplicationController
   end
 
   def destroy
-    @invoice = Invoice.find(params[:id])
     @invoice.destroy
     redirect_to invoices_url, :notice => "Successfully destroyed invoice."
   end
@@ -73,5 +71,15 @@ class InvoicesController < ApplicationController
     @title = "Invoices for #{p.name}"
     @invoices = Invoice.where(["project_id = ?", p.id]).order('invoice_date,paid_date').paginate(:page => params[:page])
     render :action => 'index'
+  end
+
+  private
+
+  def set_invoice
+    @invoice = Invoice.find(params[:id])
+  end
+
+  def invoice_params
+    params.require(:invoice).permit(:project_id, :invoice_date, :paid_date, :memo)
   end
 end
