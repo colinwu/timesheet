@@ -6,15 +6,14 @@ class ExpensesController < ApplicationController
   end
 
   def show
-  
   end
 
   def new
-    @expense = Expense.new
+    @expense = Expense.new(project_id: 3)
   end
 
   def create
-    @expense = Expense.new(params[:expense])
+    @expense = Expense.new(expense_params)
     if @expense.save
       redirect_to expenses_url, :notice => "Successfully created expense."
     else
@@ -26,7 +25,7 @@ class ExpensesController < ApplicationController
   end
 
   def update
-    if @expense.update_attributes(params[:expense])
+    if @expense.update(expense_params)
       redirect_to @expense, :notice  => "Successfully updated expense."
     else
       render :action => 'edit'

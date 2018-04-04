@@ -6,7 +6,6 @@ class ContactsController < ApplicationController
   end
 
   def show
-    @contact = Contact.find(params[:id])
   end
 
   def new
@@ -14,7 +13,7 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @contact = Contact.new(params[:contact])
+    @contact = Contact.new(contact_params)
     if @contact.save
       redirect_to @contact, :notice => "Successfully created contact."
     else
@@ -23,12 +22,11 @@ class ContactsController < ApplicationController
   end
 
   def edit
-    @contact = Contact.find(params[:id])
   end
 
   def update
     @contact = Contact.find(params[:id])
-    if @contact.update_attributes(params[:contact])
+    if @contact.update(contact_params)
       redirect_to @contact, :notice  => "Successfully updated contact."
     else
       render :action => 'edit'
@@ -36,7 +34,6 @@ class ContactsController < ApplicationController
   end
 
   def destroy
-    @contact = Contact.find(params[:id])
     @contact.destroy
     redirect_to contacts_url, :notice => "Successfully destroyed contact."
   end

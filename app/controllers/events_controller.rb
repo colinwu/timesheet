@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(event_params)
     if @event.save
       redirect_to show_project_event_url(@event.project_id), :notice => "Successfully created event."
     else
@@ -26,7 +26,7 @@ class EventsController < ApplicationController
 
   def update
     respond_to do |fmt|
-      if @event.update_attributes(params[:event])
+      if @event.update(event_params)
         fmt.html {redirect_to show_project_event_url(@event.project_id), :notice  => "Successfully updated event."}
         fmt.json {respond_with_bip(@event)}
       else

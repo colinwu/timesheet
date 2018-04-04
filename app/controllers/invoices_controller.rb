@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :set_invoice, only: [:show, :edit, :update, :destroy,:project_new_or_add]
 
   layout "show_invoice", :only => :show
   
@@ -25,7 +25,6 @@ class InvoicesController < ApplicationController
 
   # The list of event ids are passed in the Hash params[:select]
   def project_new_or_add
-    @project = Project.find params[:id]
     event_list = params[:select]
     if params[:commit] == 'Generate Invoice'
       @invoice = Invoice.create(:invoice_date => Date.today, :project_id => @project.id, :memo => params[:invoice_memo])
@@ -42,7 +41,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(params[:invoice])
+    @invoice = Invoice.new(invoice_params)
     if @invoice.save
       redirect_to @invoice, :notice => "Successfully created invoice."
     else
@@ -54,7 +53,7 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    if @invoice.update_attributes(params[:invoice])
+    if @invoice.update(invoice_params)
       redirect_to @invoice, :notice  => "Successfully updated invoice."
     else
       render :action => 'edit'
