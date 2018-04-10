@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy,:project_new_or_add]
+  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
 
   layout "show_invoice", :only => :show
   
@@ -27,6 +27,7 @@ class InvoicesController < ApplicationController
   def project_new_or_add
     event_list = params[:select]
     if params[:commit] == 'Generate Invoice'
+      @project = Project.find(params[:id])
       @invoice = Invoice.create(:invoice_date => Date.today, :project_id => @project.id, :memo => params[:invoice_memo])
     elsif params[:commit] == 'Add to Invoice'
       @invoice = Invoice.find params[:invoice_id]
