@@ -40,8 +40,8 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    if @project.update_attributes(params[:project])
-      redirect_to @project, :notice  => "Successfully updated project."
+    if @project.update_attributes(project_params)
+      redirect_to projects_url, :notice  => "Successfully updated project."
     else
       render :action => 'edit'
     end

@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :stop_now, :start]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :stop_now]
 
   def index
     @events = Event.order("project_id,start_at").paginate(:page => params[:page])
@@ -42,6 +42,7 @@ class EventsController < ApplicationController
   end
 
   def start
+    @project = Project.find(params[:id])
     @event = Event.create(:project_id => @project.id, :rate => @project.rate, :start_at => Time.now)
     render :action => 'edit'
   end
