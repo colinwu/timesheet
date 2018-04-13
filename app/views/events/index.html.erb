@@ -23,20 +23,18 @@
   <% for event in @events %>
     <tr class="<%= cycle('light','dark') %>">
       <td><% unless (event.end_at.nil? or request.parameters[:action] != 'show_project' or !event.invoice_id.nil?) %><%= check_box_tag "select[#{event.id}]", event.id %><% end %></td>
-      <td><%= event.start_at.to_formatted_s(:db) %></td>
-      <td><%= event.end_at.nil? ? '' : event.end_at.to_formatted_s(:db) %></td>
-<% if request.parameters[:action] != 'show_project' %>
+      <td><%= event.start_at.to_s(:medium) %></td>
+      <td><%= event.end_at.nil? ? '' : event.end_at.to_s(:medium) %></td>
+    <% if request.parameters[:action] != 'show_project' %>
       <td><%= event.project.name %></td>
-<% else %>
+    <% else %>
       <td><%= event.invoice_id.nil? ? '' : event.invoice_id %></td>
-<% end %>
+    <% end %>
       <td><%= best_in_place(event, :description) %></td>
       <td>
-<!--        <% if event.invoice_id.nil? %> -->
-          <%= link_to "Edit", edit_event_path(event) %> |
-          <%= link_to_if event.end_at.nil?, "Stop", stop_now_event_path(event) %> |
-          <%= link_to "Del", event, :confirm => 'Are you sure?', :method => :delete %>
-<!--        <% end %> -->
+        <%= link_to "Edit", edit_event_path(event) %> |
+        <%= link_to_if event.end_at.nil?, "Stop", stop_now_event_path(event) %> |
+        <%= link_to "Del", event, :confirm => 'Are you sure?', :method => :delete %>
       </td>
     </tr>
   <% end %>

@@ -52,7 +52,7 @@ Colin Wu, HST#: 83369 1199, Invoice #: <%= @invoice.id %>
   <% @events.each do |e| %>
   <tr>
     <td class="inv-description"><%=h e.description %></td>
-    <td><%=h e.start_at.to_formatted_s(:medium) %></td>
+    <td><%=h e.start_at.to_formatted_s(:YmdHM) %></td>
     <td class="align-right"><%=h number_with_precision(@dur[e.id], :precision => 2) %> hr</td>
     <td class="align-right"><%=h number_to_currency(e.rate) %></td>
     <td class="align-right"><%=h number_to_currency(@sub[e.id]) %></td>
