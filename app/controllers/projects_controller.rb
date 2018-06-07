@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(project_params)
     if @project.save
       redirect_to @project, :notice => "Successfully created project."
     else

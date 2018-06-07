@@ -34,7 +34,7 @@ c/o <%= @invoice.project.contact.name %>
 </p>
 </div>
 <div id="invoice-summary">
-<%= @invoice.memo -%>  <span class='right'><%=h number_to_currency(@total)
+<%= @invoice.memo -%>  <span class='align-right'><%=h number_to_currency(@total)
 -%></span>
 </div>
 <table>
@@ -44,7 +44,6 @@ Colin Wu, HST#: 83369 1199, Invoice #: <%= @invoice.id %>
 
   <tr>
     <th>Detail</th>
-    <th>Start Time</th>
     <th>Dur</th>
     <th>$/hr</th>
     <th>Line Amount</th>
@@ -52,22 +51,21 @@ Colin Wu, HST#: 83369 1199, Invoice #: <%= @invoice.id %>
   <% @events.each do |e| %>
   <tr>
     <td class="inv-description"><%=h e.description %></td>
-    <td><%=h e.start_at.to_formatted_s(:YmdHM) %></td>
     <td class="align-right"><%=h number_with_precision(@dur[e.id], :precision => 2) %> hr</td>
     <td class="align-right"><%=h number_to_currency(e.rate) %></td>
     <td class="align-right"><%=h number_to_currency(@sub[e.id]) %></td>
   </tr>
   <% end %>
   <tr>
-    <td colspan=4 class="inv-total">Sub Total:</td>
+    <td colspan=3 class="inv-total">Sub Total:</td>
     <td class="inv-total"><%=h number_to_currency(@subtotal) %></td>
   </tr>
   <tr>
-    <td colspan=4 class="inv-total">HST:</td>
+    <td colspan=3 class="inv-total">HST:</td>
     <td class="inv-total"><%=h number_to_currency(@hst) %></td>
   </tr>
   <tr>
-  <td colspan=4 class="inv-total">Total:</td>
+  <td colspan=3 class="inv-total">Total:</td>
   <td class="inv-total"><%=h number_to_currency(@total) %></td>
   </tr>
 </table>

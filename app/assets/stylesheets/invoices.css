@@ -53,11 +53,11 @@ h1 {
 }
 
 #vendor-name {
-  font-size: 30px;
+  font-size: 16pt;
 }
 
 #vendor-address {
-  font-size: large;
+  font-size: 14pt;
 }
 
 #vendor_hst {
@@ -130,6 +130,6 @@ th {
 
 .inv-total {
   font-weight: bold;
-  font-size: large;
+  font-size: 12pt;
   text-align: right;
 }
